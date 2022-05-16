@@ -2,7 +2,7 @@ const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 const ENEMY_NUM = 10;
 
-let bulettes = [];
+let bulletes = [];
 let enemyBullets = [];
 
 const plane = new Plane(10);
@@ -20,12 +20,12 @@ document.body.addEventListener("mousemove", function (e) {
 });
 
 document.body.addEventListener("click", function () {
-  bulettes.push(new Bullet(plane.x + 50, plane.y, "player"));
+  bulletes.push(new Bullet(plane.x + 50, plane.y, "player"));
 });
 
 function drawBullets() {
-  bulettes = bulettes.filter((bullet) => bullet.y > 0);
-  bulettes.forEach((bullet) => {
+  bulletes = bulletes.filter((bullet) => bullet.y > 0);
+  bulletes.forEach((bullet) => {
     bullet.draw(ctx);
   });
 }
@@ -52,11 +52,26 @@ function draw() {
       bullet.x < plane.x + plane.width &&
       bullet.y > plane.y
     ) {
-      console.log("damege!");
       return false;
     } else {
       return true;
     }
+  });
+
+  bulletes = bulletes.filter((bullet) => {
+    for (let i = 0; i < enemies.length; i++) {
+      if (
+        bullet.x > enemies[i].x &&
+        bullet.x < enemies[i].x + enemies[i].width &&
+        bullet.y < enemies[i].y
+      ) {
+        console.log("hit", i);
+        return false;
+      } else {
+        console.log("not hit", i);
+      }
+    }
+    return true;
   });
 
   requestAnimationFrame(draw);
