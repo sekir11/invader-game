@@ -46,6 +46,19 @@ function draw() {
   drawEnemyBullets();
   drawBullets();
 
+  enemyBullets = enemyBullets.filter((bullet) => {
+    if (
+      bullet.x > plane.x &&
+      bullet.x < plane.x + plane.width &&
+      bullet.y > plane.y
+    ) {
+      console.log("damege!");
+      return false;
+    } else {
+      return true;
+    }
+  });
+
   requestAnimationFrame(draw);
 }
 draw();
