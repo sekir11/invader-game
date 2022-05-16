@@ -26,4 +26,11 @@ class Enemy {
   getRandom(min, max) {
     return Math.floor(Math.random() * (max + 1 - min)) + min;
   }
+
+  shoot(enemyBullets) {
+    const random = this.getRandom(0, 1000);
+    if (random > 990) {
+      enemyBullets.push(new Bullet(this.x, this.y, "enemy"));
+    }
+  }
 }

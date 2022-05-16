@@ -3,6 +3,7 @@ const ctx = canvas.getContext("2d");
 const ENEMY_NUM = 10;
 
 let bulettes = [];
+let enemyBullets = [];
 
 const plane = new Plane(10);
 const enemies = [];
@@ -19,7 +20,7 @@ document.body.addEventListener("mousemove", function (e) {
 });
 
 document.body.addEventListener("click", function () {
-  bulettes.push(new Bullet(plane.x + 50, plane.y));
+  bulettes.push(new Bullet(plane.x + 50, plane.y, "player"));
 });
 
 function drawBullets() {
@@ -29,13 +30,20 @@ function drawBullets() {
   });
 }
 
+function drawEnemyBullets() {
+  enemyBullets = enemyBullets.filter((bullet) => bullet.y < 500);
+  enemyBullets.forEach((bullet) => bullet.draw(ctx));
+}
+
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   plane.draw(ctx);
   enemies.forEach((enemy) => {
+    enemy.shoot(enemyBullets);
     enemy.randomWalk(canvas.width);
     enemy.draw(ctx);
   });
+  drawEnemyBullets();
   drawBullets();
 
   requestAnimationFrame(draw);
