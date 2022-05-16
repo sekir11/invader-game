@@ -9,6 +9,6 @@ class Plane {
   }
 
   draw(context) {
-    context.drawImage(plane.image, plane.x, plane.y, plane.width, plane.height);
+    context.drawImage(this.image, this.x, this.y, this.width, this.height);
   }
 }
