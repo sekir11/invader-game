@@ -1,6 +1,6 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
-const ENEMY_NUM = 10;
+let ENEMY_NUM = 10;
 
 let bulletes;
 let enemyBullets;
@@ -18,11 +18,15 @@ function init() {
 
   plane = new Plane(10);
   enemies = [];
+  initEnemies();
+
+  draw();
+}
+
+function initEnemies() {
   for (let i = 0; i < ENEMY_NUM; i++) {
     enemies.push(new Enemy(canvas));
   }
-
-  draw();
 }
 
 const restartButton = document.getElementById("restart");
@@ -102,6 +106,10 @@ function judgePlaneBulletesCollision() {
       ) {
         score++;
         enemies.splice(i, 1);
+        if (enemies.length === 0) {
+          ENEMY_NUM++;
+          initEnemies();
+        }
         return false;
       } else {
       }
