@@ -4,6 +4,7 @@ const ENEMY_NUM = 10;
 
 let bulletes = [];
 let enemyBullets = [];
+let score = 0;
 
 const plane = new Plane(10);
 const enemies = [];
@@ -45,9 +46,17 @@ function draw() {
     enemy.randomWalk(canvas.width);
     enemy.draw(ctx);
   });
+
   drawEnemyBullets();
   drawBullets();
+  judgeEnemyBulletesCollision();
+  judgePlaneBulletesCollision();
+  drawScore();
 
+  requestAnimationFrame(draw);
+}
+
+function judgeEnemyBulletesCollision() {
   enemyBullets = enemyBullets.filter((bullet) => {
     if (
       bullet.x > plane.x &&
@@ -59,7 +68,9 @@ function draw() {
       return true;
     }
   });
+}
 
+function judgePlaneBulletesCollision() {
   bulletes = bulletes.filter((bullet) => {
     for (let i = 0; i < enemies.length; i++) {
       if (
@@ -67,6 +78,7 @@ function draw() {
         bullet.x < enemies[i].x + enemies[i].width &&
         bullet.y < enemies[i].y + 70
       ) {
+        score++;
         enemies.splice(i, 1);
         return false;
       } else {
@@ -74,6 +86,10 @@ function draw() {
     }
     return true;
   });
+}
 
-  requestAnimationFrame(draw);
+function drawScore() {
+  ctx.font = "24px serif";
+  ctx.fillStyle = "black";
+  ctx.fillText("SCORE: " + score, 10, 25);
 }
