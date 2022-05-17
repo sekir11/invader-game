@@ -36,7 +36,7 @@ startButton.addEventListener("click", function () {
 });
 
 document.body.addEventListener("mousemove", function (e) {
-  const mX = e.pageX - 70;
+  const mX = e.clientX - canvas.offsetLeft - 40;
 
   if (plane && canvas.width - 100 > mX && 0 < mX) {
     plane.x = mX;
