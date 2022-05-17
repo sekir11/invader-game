@@ -1,15 +1,12 @@
-class Enemy {
+class Enemy extends Agent {
   constructor(canvas) {
-    this.width = 100;
-    this.height = 100;
-    this.x = this.getRandom(0, canvas.width - this.width);
-    this.y = this.getRandom(0, canvas.height / 3);
-    this.image = new Image();
-    this.image.src = "./img/enemy.gif";
-  }
-
-  draw(context) {
-    context.drawImage(this.image, this.x, this.y, this.width, this.height);
+    super(
+      getRandom(0, canvas.width - 100),
+      getRandom(0, canvas.height / 3),
+      100,
+      100,
+      "./img/enemy.gif"
+    );
   }
 
   randomWalk(canvasWidth) {
@@ -23,14 +20,14 @@ class Enemy {
     }
   }
 
-  getRandom(min, max) {
-    return Math.floor(Math.random() * (max + 1 - min)) + min;
-  }
-
   shoot(enemyBullets) {
-    const random = this.getRandom(0, 1000);
+    const random = getRandom(0, 1000);
     if (random > 990) {
       enemyBullets.push(new Bullet(this.x, this.y, "enemy"));
     }
   }
+}
+
+function getRandom(min, max) {
+  return Math.floor(Math.random() * (max + 1 - min)) + min;
 }
