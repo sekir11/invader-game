@@ -33,4 +33,10 @@
 body {
   background-color: #c8b3ef;
 }
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
 /*# sourceMappingURL=style.css.map */
