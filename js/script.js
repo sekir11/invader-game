@@ -47,6 +47,10 @@ document.body.addEventListener("click", function () {
   bulletes.push(new Bullet(plane.x + 50, plane.y, "player"));
 });
 
+document.body.addEventListener("onclick", function () {
+  bulletes.push(new Bullet(plane.x + 50, plane.y, "player"));
+});
+
 function drawBullets() {
   bulletes = bulletes.filter((bullet) => bullet.y > 0);
   bulletes.forEach((bullet) => {
