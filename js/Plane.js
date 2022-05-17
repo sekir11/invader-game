@@ -6,7 +6,7 @@ class Plane {
     this.y = 420;
     this.width = 100;
     this.height = 70;
-    this.life = 3;
+    this.life = 103;
   }
 
   draw(context) {

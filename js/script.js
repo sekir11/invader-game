@@ -8,6 +8,7 @@ let score;
 
 let plane;
 let enemies;
+let stageLevel;
 
 init();
 
@@ -15,6 +16,7 @@ function init() {
   bulletes = [];
   enemyBullets = [];
   score = 0;
+  stageLevel = 1;
 
   plane = new Plane(10);
   enemies = [];
@@ -73,6 +75,7 @@ function draw() {
   judgePlaneBulletesCollision();
   drawScore();
   drawLife();
+  drawStageLevel();
 
   if (plane.life > 0) {
     requestAnimationFrame(draw);
@@ -106,16 +109,21 @@ function judgePlaneBulletesCollision() {
       ) {
         score++;
         enemies.splice(i, 1);
-        if (enemies.length === 0) {
-          ENEMY_NUM++;
-          initEnemies();
-        }
+        judgePlaneWin();
         return false;
       } else {
       }
     }
     return true;
   });
+}
+
+function judgePlaneWin() {
+  if (enemies.length === 0) {
+    ENEMY_NUM++;
+    stageLevel++;
+    initEnemies();
+  }
 }
 
 function drawScore() {
@@ -137,4 +145,10 @@ function judgePlaneDefeat() {
     ctx.fillStyle = "black";
     ctx.fillText("GAME OVER", 100, 250);
   }
+}
+
+function drawStageLevel() {
+  ctx.font = "24px serif";
+  ctx.fillStyle = "black";
+  ctx.fillText("STAGE: " + stageLevel, 250, 25);
 }
