@@ -43,6 +43,14 @@ document.body.addEventListener("mousemove", function (e) {
   }
 });
 
+document.body.addEventListener("touchmove", function (e) {
+  const mX = e.clientX - canvas.offsetLeft - 40;
+
+  if (plane && canvas.width - 100 > mX && 0 < mX) {
+    plane.x = mX;
+  }
+});
+
 document.body.addEventListener("click", function () {
   bulletes.push(new Bullet(plane.x + 50, plane.y, "player"));
 });
