@@ -23,7 +23,7 @@ class Enemy extends Agent {
   shoot(enemyBullets) {
     const random = getRandom(0, 1000);
     if (random > 990) {
-      enemyBullets.push(new Bullet(this.x, this.y, "enemy"));
+      enemyBullets.push(new Bullet(this.x + 50, this.y + 50, "enemy"));
     }
   }
 }
