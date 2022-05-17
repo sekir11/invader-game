@@ -2,17 +2,33 @@ const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 const ENEMY_NUM = 10;
 
-let bulletes = [];
-let enemyBullets = [];
-let score = 0;
+let bulletes;
+let enemyBullets;
+let score;
 
-const plane = new Plane(10);
-const enemies = [];
-for (let i = 0; i < ENEMY_NUM; i++) {
-  enemies.push(new Enemy(canvas));
+let plane;
+let enemies;
+
+init();
+
+function init() {
+  bulletes = [];
+  enemyBullets = [];
+  score = 0;
+
+  plane = new Plane(10);
+  enemies = [];
+  for (let i = 0; i < ENEMY_NUM; i++) {
+    enemies.push(new Enemy(canvas));
+  }
+
+  draw();
 }
 
-draw();
+const restartButton = document.getElementById("restart");
+restartButton.addEventListener("click", function () {
+  init();
+});
 
 document.body.addEventListener("mousemove", function (e) {
   const mX = e.pageX - 70;
@@ -52,8 +68,11 @@ function draw() {
   judgeEnemyBulletesCollision();
   judgePlaneBulletesCollision();
   drawScore();
+  drawLife();
 
-  requestAnimationFrame(draw);
+  if (plane.life > 0) {
+    requestAnimationFrame(draw);
+  }
 }
 
 function judgeEnemyBulletesCollision() {
@@ -63,6 +82,9 @@ function judgeEnemyBulletesCollision() {
       bullet.x < plane.x + plane.width &&
       bullet.y > plane.y
     ) {
+      plane.life--;
+      judgePlaneDefeat();
+
       return false;
     } else {
       return true;
@@ -92,4 +114,19 @@ function drawScore() {
   ctx.font = "24px serif";
   ctx.fillStyle = "black";
   ctx.fillText("SCORE: " + score, 10, 25);
+}
+
+function drawLife() {
+  ctx.font = "24px serif";
+  ctx.fillStyle = "black";
+  ctx.fillText("LIFE: " + plane.life, 400, 25);
+}
+
+function judgePlaneDefeat() {
+  if (plane.life === 0) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.font = "48px serif";
+    ctx.fillStyle = "black";
+    ctx.fillText("GAME OVER", 100, 250);
+  }
 }
