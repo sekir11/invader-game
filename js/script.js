@@ -11,6 +11,8 @@ for (let i = 0; i < ENEMY_NUM; i++) {
   enemies.push(new Enemy(canvas));
 }
 
+draw();
+
 document.body.addEventListener("mousemove", function (e) {
   const mX = e.pageX - 70;
 
@@ -63,12 +65,11 @@ function draw() {
       if (
         bullet.x > enemies[i].x &&
         bullet.x < enemies[i].x + enemies[i].width &&
-        bullet.y < enemies[i].y
+        bullet.y < enemies[i].y + 70
       ) {
-        console.log("hit", i);
+        enemies.splice(i, 1);
         return false;
       } else {
-        console.log("not hit", i);
       }
     }
     return true;
@@ -76,4 +77,3 @@ function draw() {
 
   requestAnimationFrame(draw);
 }
-draw();
