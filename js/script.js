@@ -10,8 +10,6 @@ let plane;
 let enemies;
 let stageLevel;
 
-init();
-
 function init() {
   bulletes = [];
   enemyBullets = [];
@@ -31,15 +29,16 @@ function initEnemies() {
   }
 }
 
-const restartButton = document.getElementById("restart");
-restartButton.addEventListener("click", function () {
+const startButton = document.getElementById("start");
+startButton.addEventListener("click", function () {
   init();
+  startButton.disabled = true;
 });
 
 document.body.addEventListener("mousemove", function (e) {
   const mX = e.pageX - 70;
 
-  if (canvas.width - 100 > mX && 0 < mX) {
+  if (plane && canvas.width - 100 > mX && 0 < mX) {
     plane.x = mX;
   }
 });
@@ -143,6 +142,8 @@ function judgePlaneDefeat() {
     ctx.font = "48px serif";
     ctx.fillStyle = "black";
     ctx.fillText("GAME OVER", 100, 250);
+
+    startButton.disabled = false;
   }
 }
 
