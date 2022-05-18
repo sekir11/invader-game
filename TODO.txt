@@ -11,3 +11,9 @@
 [X]全部倒した後に再度出現させる
 [X]PlaneとEnemyの親クラスを作る
 ・デザイン修正
+
+
+・API Key = AIzaSyAcnvsnElWQ-VwNgIQdPpG3LK9FI-o7xuY
+
+
+コンパイル: yarn run webpack

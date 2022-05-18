@@ -1,3 +1,10 @@
+const Plane = require("./Plane");
+const Enemy = require("./Enemy");
+const Bullet = require("./Bullet");
+require("./Firebase");
+const $ = require("jquery");
+const Ranking = require("./Ranking");
+
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 let ENEMY_NUM = 10;
@@ -9,6 +16,21 @@ let score;
 let plane;
 let enemies;
 let stageLevel;
+const ranking = new Ranking();
+
+const messagesRef = firebase.database().ref("/data");
+
+messagesRef.once("value").then(function (snapshot) {
+  ranking.set(snapshot.val());
+  ranking.remove();
+  ranking.sort();
+  ranking.reflect();
+});
+
+// messagesRef.on("child_changed", function (data) {
+//   console.log(data);
+// });
+// messagesRef.update({ name: "vvvv", texta: "vvvvv" });
 
 function init() {
   bulletes = [];

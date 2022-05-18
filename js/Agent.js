@@ -12,3 +12,5 @@ class Agent {
     context.drawImage(this.image, this.x, this.y, this.width, this.height);
   }
 }
+
+module.exports = Agent;

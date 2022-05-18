@@ -1,3 +1,6 @@
+const Agent = require("./Agent");
+const Bullet = require("./Bullet");
+
 class Enemy extends Agent {
   constructor(canvas) {
     super(
@@ -31,3 +34,5 @@ class Enemy extends Agent {
 function getRandom(min, max) {
   return Math.floor(Math.random() * (max + 1 - min)) + min;
 }
+
+module.exports = Enemy;

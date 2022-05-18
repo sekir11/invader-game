@@ -24,3 +24,4 @@ class Bullet {
     context.closePath();
   }
 }
+module.exports = Bullet;
