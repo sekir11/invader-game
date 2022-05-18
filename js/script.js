@@ -16,20 +16,28 @@ let score;
 let plane;
 let enemies;
 let stageLevel;
+let name;
+let messagesRef;
 const ranking = new Ranking();
 
-const messagesRef = firebase.database().ref("/data");
+$(function () {
+  const close = $(".modal-input-ok"),
+    container = $(".modal-container");
 
-messagesRef.once("value").then(function (snapshot) {
-  ranking.set(snapshot.val());
-  ranking.remove();
-  ranking.sort();
-  ranking.reflect();
+  close.on("click", function () {
+    container.removeClass("active");
+    name = $(".modal-input-name").val();
+  });
+
+  $(document).on("click", function (e) {
+    if (!$(e.target).closest(".modal-body").length) {
+      container.removeClass("active");
+    }
+  });
 });
 
-// messagesRef.on("child_changed", function (data) {
-//   console.log(data);
-// });
+displayRanking();
+
 // messagesRef.update({ name: "vvvv", texta: "vvvvv" });
 
 function init() {
@@ -165,6 +173,21 @@ function judgePlaneDefeat() {
     ctx.fillStyle = "black";
     ctx.fillText("GAME OVER", 100, 250);
 
+    const result = {};
+    result[name] = score;
+    if (ranking.contain(name)) {
+      if (ranking.get(name) < score) {
+        alert("記録を更新しました！");
+      }
+
+      messagesRef.update(result);
+      displayRanking();
+    } else {
+      alert("記録を登録します。");
+      messagesRef.update(result);
+      displayRanking();
+    }
+
     startButton.disabled = false;
   }
 }
@@ -173,4 +196,14 @@ function drawStageLevel() {
   ctx.font = "24px serif";
   ctx.fillStyle = "black";
   ctx.fillText("STAGE: " + stageLevel, 250, 25);
+}
+
+function displayRanking() {
+  messagesRef = firebase.database().ref("/data");
+  messagesRef.once("value").then(function (snapshot) {
+    ranking.set(snapshot.val());
+    ranking.remove();
+    ranking.sort();
+    ranking.reflect();
+  });
 }

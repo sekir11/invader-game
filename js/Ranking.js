@@ -41,6 +41,14 @@ class Ranking {
       );
     }
   }
+
+  contain(key) {
+    return this.rankingList[key] !== undefined;
+  }
+
+  get(key) {
+    return this.rankingList[key];
+  }
 }
 
 module.exports = Ranking;
