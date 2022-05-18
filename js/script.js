@@ -178,10 +178,9 @@ function judgePlaneDefeat() {
     if (ranking.contain(name)) {
       if (ranking.get(name) < score) {
         alert("記録を更新しました！");
+        messagesRef.update(result);
+        displayRanking();
       }
-
-      messagesRef.update(result);
-      displayRanking();
     } else {
       alert("記録を登録します。");
       messagesRef.update(result);
